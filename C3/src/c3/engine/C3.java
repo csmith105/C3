@@ -1,3 +1,5 @@
+package c3.engine;
+
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -10,7 +12,7 @@ public class C3 {
  
     // We need to strongly reference callback instances.
     private GLFWErrorCallback errorCallback;
-    private GLFWKeyCallback   keyCallback;
+    private GLFWKeyCallback keyCallback;
  
     // The window handle
     private long window;
