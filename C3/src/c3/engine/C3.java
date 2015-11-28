@@ -9,7 +9,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
  
 public class C3 {
- 
+	  
     // We need to strongly reference callback instances.
     private GLFWErrorCallback errorCallback;
     private GLFWKeyCallback keyCallback;
@@ -58,16 +58,16 @@ public class C3 {
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
  
-        int WIDTH = 1024;
+        int WIDTH = 800;
         
-        int HEIGHT = 768;
+        int HEIGHT = 600;
  
         // Create the window
         window = glfwCreateWindow(WIDTH, HEIGHT, "Hello World!", NULL, NULL);
         
         if (window == NULL)
             throw new RuntimeException("Failed to create the GLFW window");
- 
+        
         // Setup a key callback. It will be called every time a key is pressed, repeated or released.
         glfwSetKeyCallback(window, keyCallback = new GLFWKeyCallback() {
         	
@@ -95,6 +95,16 @@ public class C3 {
  
         // Make the window visible
         glfwShowWindow(window);
+        
+        // Window resize callback
+        glfwSetFramebufferSizeCallback(window, new GLFWFramebufferSizeCallback() {
+    		
+    		@Override
+    	    public void invoke(long window, int width, int height){
+    			GL11.glViewport(0, 0, width, height);
+    		}
+    		
+    	});
         
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
