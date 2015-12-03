@@ -9,7 +9,32 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
  
 public class C3 {
-	  
+	
+	/**
+	 * Debug flag
+	 */
+	private static boolean debug = false;
+	
+	public static boolean isDebug() {
+		return debug;
+	}
+	
+	private static void processArguments(String[] arguments) {
+		
+		for(int i = 0; i < arguments.length; ++i) {
+			
+			switch(arguments[i]) {
+			
+				case "debug":
+					debug = true;
+					break;
+			
+			}
+			
+		}
+		
+	}
+	
     // We need to strongly reference callback instances.
     private GLFWErrorCallback errorCallback;
     private GLFWKeyCallback keyCallback;
@@ -136,8 +161,12 @@ public class C3 {
         
     }
  
-    public static void main(String[] args) {
+    public static void main(String[] arguments) {
     	
+    	// Process command line arguments before running the engine
+    	C3.processArguments(arguments);
+    	
+    	// Run the engine
         new C3().run();
         
     }
