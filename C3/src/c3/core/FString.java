@@ -1,4 +1,4 @@
-package c3.engine;
+package c3.core;
 
 import java.math.BigInteger;
 import java.util.Hashtable;
@@ -26,10 +26,19 @@ public class FString {
 		return string + " (" + hash.toString() + ")";
 	}
 	
+	/**
+	 * Gets the actual string value for this FString
+	 * 
+	 * @return the string value for this FString
+	 */
 	public String getString() {
 		return string;
 	}
 	
+	/**
+	 * Gets the hash for this FString as a BigInteger
+	 * @return the hash for this FString
+	 */
 	public BigInteger getHash() {
 		return hash;
 	}
@@ -41,6 +50,7 @@ public class FString {
 	
 	@Override
     public int hashCode() {
+		// This is a down conversion from BigInteger to integer
         return (int) hash.intValue();
     }
 	

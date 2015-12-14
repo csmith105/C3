@@ -1,4 +1,4 @@
-package c3.engine;
+package c3.core;
 
 public class World {
 	

@@ -1,4 +1,4 @@
-package c3.engine;
+package c3.core;
 
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
