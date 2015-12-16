@@ -58,4 +58,6 @@ public abstract class Asset {
 	
 	public abstract void unload();
 	
+	// TODO can you make an abstract static method? If so, index()
+	
 }
