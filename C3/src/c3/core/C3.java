@@ -163,6 +163,8 @@ public class C3 {
  
     public static void main(String[] arguments) {
     	
+    	Asset.indexAllAssets();
+    	
     	// Process command line arguments before running the engine
     	C3.processArguments(arguments);
     	

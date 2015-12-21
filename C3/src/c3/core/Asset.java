@@ -2,6 +2,7 @@ package c3.core;
 
 import java.util.Hashtable;
 
+import c3.assets.VertexShaderAsset;
 import c3.exceptions.AssetLoadException;
 
 /**
@@ -21,21 +22,27 @@ public abstract class Asset {
 	 */
 	protected static Hashtable<FString, Asset> assetList = new Hashtable<FString, Asset>();
 	
-	public static Asset getByName(FString name) {
+	public static Asset get(FString name) {
 		return assetList.get(name);
 	}
 	
-	public static void reindexAllAssets() {
-		// TODO implement this
+	public static boolean exists(FString name) {
+		return assetList.containsKey(name);
 	}
 	
-	protected final String path;
-	protected final FString name;
+	public static void indexAllAssets() {
+		
+		Console.log("Indexing all assets...");
+		
+		VertexShaderAsset.indexAllAssets();
+	}
 	
-	protected Asset(String name, String path) {
+	protected final FString name, path;
+	
+	protected Asset(FString name, FString path) {
 		
 		this.path = path;
-		this.name = new FString(name);
+		this.name = name;
 		
 		// Add this asset to the assetList
 		assetList.put(this.name, this);
@@ -47,7 +54,7 @@ public abstract class Asset {
 	 * 
 	 * @return the path of this asset
 	 */
-	protected String getPath() {
+	protected FString getPath() {
 		return this.path;
 	}
 	
@@ -57,7 +64,5 @@ public abstract class Asset {
 	public abstract void load() throws AssetLoadException;
 	
 	public abstract void unload();
-	
-	// TODO can you make an abstract static method? If so, index()
 	
 }
