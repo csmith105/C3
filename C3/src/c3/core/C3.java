@@ -3,7 +3,9 @@ package c3.core;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
- 
+
+import c3.assets.Asset;
+
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -44,7 +46,7 @@ public class C3 {
  
     public void run() {
     	
-        System.out.println("Hello LWJGL " + Version.getVersion() + "!");
+        System.out.println("LWJGL " + Version.getVersion() + "!");
  
         try {
         	
@@ -124,12 +126,12 @@ public class C3 {
         // Window resize callback
         glfwSetFramebufferSizeCallback(window, new GLFWFramebufferSizeCallback() {
     		
-    		@Override
-    	    public void invoke(long window, int width, int height){
-    			GL11.glViewport(0, 0, width, height);
-    		}
-    		
-    	});
+	    		@Override
+	    	    public void invoke(long window, int width, int height) {
+	    			GL11.glViewport(0, 0, width, height);
+	    		}
+	    		
+	    	});
         
         // This line is critical for LWJGL's interoperation with GLFW's
         // OpenGL context, or any context that is managed externally.
@@ -148,7 +150,7 @@ public class C3 {
         // Render loop
         while (glfwWindowShouldClose(window) == GLFW_FALSE) {
         	
-        	// clear the framebuffer
+        		// clear the framebuffer
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
  
             // swap the color buffers
@@ -162,13 +164,13 @@ public class C3 {
     }
  
     public static void main(String[] arguments) {
-    	
-    	Asset.indexAllAssets();
-    	
-    	// Process command line arguments before running the engine
-    	C3.processArguments(arguments);
-    	
-    	// Run the engine
+    		
+    		Asset.indexAllAssets();
+    		
+    		// Process command line arguments before running the engine
+    		C3.processArguments(arguments);
+    		
+    		// Run the engine
         new C3().run();
         
     }

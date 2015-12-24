@@ -1,8 +1,9 @@
-package c3.core;
+package c3.assets;
 
 import java.util.Hashtable;
 
-import c3.assets.VertexShaderAsset;
+import c3.core.Console;
+import c3.core.FString;
 import c3.exceptions.AssetLoadException;
 
 /**
@@ -35,6 +36,8 @@ public abstract class Asset {
 		Console.log("Indexing all assets...");
 		
 		VertexShaderAsset.indexAllAssets();
+		// ...
+		
 	}
 	
 	protected final FString name, path;
