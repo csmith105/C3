@@ -1,6 +1,6 @@
 package c3.renderer;
 
-import org.lwjgl.opengl.ARBVertexShader;
+import org.lwjgl.opengl.GL20;
 
 import c3.assets.VertexShaderAsset;
 
@@ -12,8 +12,8 @@ public class VertexShader extends Shader {
 		this.asset = asset;
 	}
 	
-	public void load() {
-		compile(asset.getData(), ARBVertexShader.GL_VERTEX_SHADER_ARB);
+	public void compile() {
+		compile(asset.getData(), GL20.GL_VERTEX_SHADER);
 	}
 
 }
