@@ -37,7 +37,7 @@ public abstract class Utility {
 		
 	}
 
-	public static File[] getFilesWithExtension(String path, String extension) {
+	public static File[] getFilesWithExtension(String path, final String extension) {
 		
 		File dir = new File(path);
 
