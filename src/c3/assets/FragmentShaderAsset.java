@@ -30,8 +30,6 @@ public class FragmentShaderAsset extends Asset {
 				
 	}
 	
-	private String assetData;
-
 	public FragmentShaderAsset(FString name, FString path) {
 		
 		super(name, path);

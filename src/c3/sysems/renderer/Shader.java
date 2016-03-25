@@ -16,7 +16,7 @@ public abstract class Shader {
 	protected void compile(String program, int type) throws RuntimeException {
 		
 		// If a shader is currently loaded...
-		if(shaderHandle > 0) {
+		if(shaderHandle != 0) {
 			
 			// do nothing
 			return;

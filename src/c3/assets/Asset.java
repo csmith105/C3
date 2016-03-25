@@ -23,12 +23,20 @@ public abstract class Asset {
 	 */
 	protected static Hashtable<FString, Asset> assetList = new Hashtable<FString, Asset>();
 	
+	protected final FString name, path;
+	
+	protected String assetData;
+	
 	public static Asset get(FString name) {
+		
 		return assetList.get(name);
+		
 	}
 	
 	public static boolean exists(FString name) {
+		
 		return assetList.containsKey(name);
+		
 	}
 	
 	public static void indexAllAssets() {
@@ -39,8 +47,6 @@ public abstract class Asset {
 		// ...
 		
 	}
-	
-	protected final FString name, path;
 	
 	protected Asset(FString name, FString path) {
 		
