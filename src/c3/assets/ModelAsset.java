@@ -2,16 +2,19 @@ package c3.assets;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joml.Vector3f;
+
 import c3.core.*;
 import c3.exceptions.*;
-import c3.math.*;
 
 class Mesh {
 	

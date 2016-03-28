@@ -6,6 +6,10 @@ public enum Console {
 	
 	public static void log(Console level, Object string) {
 		
+		// TODO Implement console stack logging
+		
+		// Thread.currentThread().getStackTrace();
+		
 		switch(level) {
 		
 		case CRITICAL:
