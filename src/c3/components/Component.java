@@ -1,4 +1,4 @@
-package c3.core;
+package c3.components;
 
 public abstract class Component {
 

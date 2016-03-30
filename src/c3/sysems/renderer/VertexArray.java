@@ -13,17 +13,17 @@ public class VertexArray implements Closeable, AutoCloseable {
 
 	protected int arrayHandle = 0;
 	
+	private int index;
+	private int size;
+	private int stride;
+	private int offset;
+	
 	public VertexArray() {
 		
-		// Only generate this buffer if it hasn't already been generated
-		if(arrayHandle == 0) {
+		// Generate buffer
+		arrayHandle = glGenVertexArrays();
 			
-			// Generate buffer
-			arrayHandle = glGenVertexArrays();
-			
-			Renderer.checkOpenGLError();
-			
-		}
+		Renderer.hasOpenGLErrorOccurred();
 		
 	}
 	
@@ -33,7 +33,7 @@ public class VertexArray implements Closeable, AutoCloseable {
 			
 			glBindVertexArray(arrayHandle);
 			
-			Renderer.checkOpenGLError();
+			Renderer.hasOpenGLErrorOccurred();
 			
 		}
 		
@@ -47,6 +47,10 @@ public class VertexArray implements Closeable, AutoCloseable {
 		
 		return this;
 		
+	}
+	
+	public void setIndex(int index) {
+		this.index = index;
 	}
 		
 	public VertexArray setup(int index, int size, int stride, int offset) {
@@ -90,7 +94,7 @@ public class VertexArray implements Closeable, AutoCloseable {
 			// Delete buffer
 			glDeleteBuffers(arrayHandle);
 			
-			Renderer.checkOpenGLError();
+			Renderer.hasOpenGLErrorOccurred();
 			
 		} else {
 			Console.log(Console.WARNING, "Attempted to set data on a non-allocated VAO");

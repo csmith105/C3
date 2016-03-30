@@ -1,16 +1,42 @@
-package c3.sysems.renderer;
+package c3.components;
 
 import org.joml.*;
 
 import c3.assets.ModelAsset;
+import c3.sysems.renderer.Program;
 
-public class Model {
+public class ModelComponent extends RenderableComponent {
+	
+	private ModelAsset modelAsset;
 	
 	private Matrix4f modelView;
 	
-	public Model(ModelAsset asset) {
+	private Program program;
+	
+	public ModelComponent() {
 		
+	}
+	
+	public ModelComponent setModelAsset(ModelAsset asset) {
 		
+		this.modelAsset = asset;
+		
+		return this;
+		
+	}
+	
+	public ModelComponent setProgram(Program program) {
+		
+		this.program = program;
+		
+		return this;
+		
+	}
+	
+	@Override
+	public void draw() {
+		
+		// TODO Auto-generated method stub
 		
 	}
 	
@@ -18,12 +44,15 @@ public class Model {
 		return modelView.getRotation(rotation);
 	}
 	
-	public Model setOrientation(AxisAngle4f rotation) {
+	public ModelComponent setOrientation(AxisAngle4f rotation) {
+		
 		modelView.set(rotation);
+		
 		return this;
+		
 	}
 	
-	public Model setPosition(Vector3f position) {
+	public ModelComponent setPosition(Vector3f position) {
 		
 		modelView.setTranslation(position);
 		
@@ -31,7 +60,7 @@ public class Model {
 		
 	}
 	
-	public Model setX(float x) {
+	public ModelComponent setX(float x) {
 		
 		modelView.m30 = x;
 		
@@ -39,7 +68,7 @@ public class Model {
 		
 	}
 
-	public Model setY(float y) {
+	public ModelComponent setY(float y) {
 		
 		modelView.m31 = y;
 		
@@ -47,7 +76,7 @@ public class Model {
 		
 	}
 
-	public Model setZ(float z) {
+	public ModelComponent setZ(float z) {
 		
 		modelView.m32 = z;
 		
@@ -79,7 +108,7 @@ public class Model {
 		
 	}
 	
-	public Model offset(Vector3f offset) {
+	public ModelComponent offset(Vector3f offset) {
 		
 		modelView.translate(offset);
 		

@@ -15,15 +15,10 @@ public class VertexBuffer implements Closeable, AutoCloseable {
 	
 	public VertexBuffer() {
 		
-		// Only generate this buffer if it hasn't already been generated
-		if(bufferHandle == 0) {
+		// Generate buffer
+		bufferHandle = glGenBuffers();
 			
-			// Generate buffer
-			bufferHandle = glGenBuffers();
-			
-			Renderer.checkOpenGLError();
-			
-		}
+		Renderer.hasOpenGLErrorOccurred();
 		
 	}
 	
@@ -33,7 +28,7 @@ public class VertexBuffer implements Closeable, AutoCloseable {
 			
 			glBindBuffer(GL_ARRAY_BUFFER, bufferHandle);
 			
-			Renderer.checkOpenGLError();
+			Renderer.hasOpenGLErrorOccurred();
 			
 		}
 		
@@ -86,7 +81,7 @@ public class VertexBuffer implements Closeable, AutoCloseable {
 			// Delete buffer
 			glDeleteBuffers(bufferHandle);
 			
-			Renderer.checkOpenGLError();
+			Renderer.hasOpenGLErrorOccurred();
 			
 		} else {
 			Console.log(Console.WARNING, "Attempted to close a non-allocated VBO");

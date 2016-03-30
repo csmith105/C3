@@ -1,77 +1,121 @@
 package c3.sysems.renderer;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
+import java.io.Closeable;
 
-public class Program {
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.*;
+
+import c3.core.Console;
+
+public class Program implements Closeable, AutoCloseable {
 
 	protected int programHandle = 0;
 	
 	private VertexShader vertexShader;
 	private FragmentShader fragmentShader;
 	
-	public Program(VertexShader vertexShader, FragmentShader fragmentShader) {
-		this.vertexShader = vertexShader;
-		this.fragmentShader = fragmentShader;
+	private boolean compiled = false;
+	private boolean needsRecompiled = false;
+	
+	public Program() {
+		
+		// Attempt to create an empty program object
+		programHandle = glCreateProgram();
+		
+		Renderer.hasOpenGLErrorOccurred();
+		
 	}
 	
-	public void compile() {
+	public Program setShader(VertexShader vertexShader) {
 		
-		// If a shader is currently loaded...
-		if(programHandle > 0) {
+		if(this.vertexShader != vertexShader) {
 			
-			// do nothing
-			return;
+			this.vertexShader = vertexShader;
+			
+			needsRecompiled = true;
 			
 		}
 		
-		vertexShader.compile();
-		fragmentShader.compile();
+		return this;
 		
-		try {
+	}
+	
+	public Program setShader(FragmentShader fragmentShader) {
+		
+		if(this.fragmentShader != fragmentShader) {
+			
+			this.fragmentShader = fragmentShader;
+			
+			needsRecompiled = true;
+			
+		}
+		
+		return this;
+		
+	}
+	
+	public boolean isCompiled() {
+		
+		return compiled;
+		
+	}
+	
+	public boolean needsRecompiled() {
+		
+		return needsRecompiled;
+		
+	}
+	
+	public Program compile() {
+		
+		// If the handle is null
+		if(programHandle == 0) {
 			
 			// Attempt to create an empty program object
-			programHandle = GL20.glCreateProgram();
-		     
-			// Return false and die if the shader couldn't be created
-		    if(programHandle == 0)
-		    		throw new RuntimeException("Error getting program handle");
-		    
-		    // Add vertex shader
-		    GL20.glAttachShader(programHandle, vertexShader.getHandle());
-		    
-		    // Add fragment shader
-		    GL20.glAttachShader(programHandle, fragmentShader.getHandle());
-		    
-		    // Attempt to compile the program
-		    GL20.glLinkProgram(programHandle);
-		    
-		    	// Did the shader compile successfully?
-		    final int programStatus = GL20.glGetProgrami(programHandle, GL20.GL_LINK_STATUS);
-		    
-		    if(programStatus == GL11.GL_FALSE)
-		    		throw new RuntimeException("Error compiling program: " + GL20.glGetProgramInfoLog(programHandle, 100));
-		    
-		    // Yes it did, return :)
-		    return;
-		    
-		} catch(Exception e) {
+			programHandle = glCreateProgram();
 			
-		    unload();
-		    
-		    throw e;
-		    
+			Renderer.hasOpenGLErrorOccurred();
+			
 		}
+		
+		// Compile shaders
+		vertexShader.compile();
+		fragmentShader.compile();
+	    
+	    // Add vertex / fragment shader
+	    glAttachShader(programHandle, vertexShader.getHandle());
+	    glAttachShader(programHandle, fragmentShader.getHandle());
+	    
+	    // Attempt to compile the program
+	    glLinkProgram(programHandle);
+	    
+	    	// Did the shader compile successfully?
+	    if(glGetProgrami(programHandle, GL_LINK_STATUS) == GL_TRUE) {
+	    		
+	    		compiled = true;
+	    		needsRecompiled = false;
+	    		
+	    } else {
+	    	
+	    		Console.log(Console.WARNING, "Program failed to compile");
+	    	
+	    }
+		
+	    return this;
 		
 	}
 	
-	public void unload() {
+	@Override
+	public void close() {
 		
-		// If the handle is valid...
-		if(programHandle > 0) {
+		// If the handle is valid
+		if(programHandle != 0) {
 			
-			// Mark the shader for deletion
-			GL20.glDeleteProgram(programHandle);
+			// Release the program handle
+			glDeleteProgram(programHandle);
+			
+			// Set the program handle to null
+			programHandle = 0;
 			
 		}
 		
